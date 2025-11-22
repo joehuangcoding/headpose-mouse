@@ -1,5 +1,9 @@
 import sys
-sys.path.append('3DDFA_V2')
+# sys.path.append('3DDFA_V2')
+import os
+
+# Add 3DDFA_V2 to path
+sys.path.append(os.path.join(os.path.dirname(__file__), '3DDFA_V2'))
 import cv2
 import yaml
 import pyautogui
@@ -147,7 +151,6 @@ while True:
                     elif movement_direction == 'up' or movement_direction == 'down':
                         move_x = 0
                     pyautogui.move(move_x, move_y)
-   
         cv2.circle(frame, face_centroid, 5, (0, 255, 0), -1)
         cv2.putText(frame, f"face center x:{face_centroid[0]} y: {face_centroid[1]}", (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
         cv2.putText(frame, f"Nose x:{nose_landmark[0]} Nose y: {nose_landmark[1]}", (10, 90), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
@@ -157,8 +160,6 @@ while True:
         cv2.putText(frame, f"Movement: {movement_direction}", (10, 210), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
         cv2.putText(frame, f"yaw: {yaw}", (10, 240), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
         cv2.putText(frame, f"pitch: {pitch}", (10, 270), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
-
-
 
     # left click when blinking three times in two seconds and only when active mode is on
     if current_time- last_blink_time < 2 and activeModeController.active_mode:
