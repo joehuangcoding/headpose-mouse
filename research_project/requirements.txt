@@ -1,0 +1,10 @@
+matplotlib
+numpy
+opencv-python==4.9.0.80
+pyautogui
+tensorflow==2.10.0
+PyYAML
+torch
+Cython
+torchvision==0.16.2
+PyGetWindow
