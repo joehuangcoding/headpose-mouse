@@ -22,6 +22,7 @@ from helper import get_eye_roi, process_eye_images, calculate_centroid, calculat
 
 pyautogui.FAILSAFE = False
 
+
 # Load trained eye blink model. The CNN model is trained on MRL Eye Blink dataset
 model = load_model('./eye_blink_30_30_gray_2l.h5')
 
@@ -67,8 +68,6 @@ while True:
     if not ret:
         print("Error: Couldn't capture frame.")
         break
-    # height, width = frame.shape[:2]
-    # print('height', height, 'width', width)
     frame = cv2.resize(frame, (640,480))
     # frame = cv2.resize(frame, (320,240))
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
@@ -92,10 +91,7 @@ while True:
             face_centroid = calculate_centroid(landmarks_list)
             movement_direction = calculate_movement_direction(nose_landmark, face_centroid, threshold=distance_threshold)
             distance = calculate_distance((nose_landmark[0], nose_landmark[1]), face_centroid)
-
             # check if active mode is on
-            # activeModeController.check_movement(nose_landmark, face_centroid)
-
             P, pose = calc_pose(param)
             yaw = pose[0]
             pitch = pose[1]
@@ -151,6 +147,8 @@ while True:
                     elif movement_direction == 'up' or movement_direction == 'down':
                         move_x = 0
                     pyautogui.move(move_x, move_y)
+        edges = cv2.Canny(frame, 100, 200)
+        frame = cv2.cvtColor(edges, cv2.COLOR_GRAY2BGR)
         cv2.circle(frame, face_centroid, 5, (0, 255, 0), -1)
         cv2.putText(frame, f"face center x:{face_centroid[0]} y: {face_centroid[1]}", (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
         cv2.putText(frame, f"Nose x:{nose_landmark[0]} Nose y: {nose_landmark[1]}", (10, 90), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
@@ -169,10 +167,11 @@ while True:
             print("Left click simulated!")
     else:
         blink_counter = 0
-
     cv2.imshow('Frame', frame)
     cv2.setWindowProperty('Frame', cv2.WND_PROP_TOPMOST, 1)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 cap.release()
 cv2.destroyAllWindows()
+
+
