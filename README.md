@@ -1,5 +1,10 @@
 # Headpose-mouse
 headpose-mouse
+![alt text](head_pose.gif)
+# How to Use
+1. Position yourself in front of your laptop camera. You will see a circle appear, indicating that you are centered and the mouse will remain still.
+2. Rotate your face up, down, left, or right to move the mouse cursor in that direction.
+3. Slowly blink your eyes twice to perform a left-click.
 
 # install pip packages
 cd research_project
